@@ -39,7 +39,7 @@ async def on_message(ctx):
         lm = lm[6:]
         guild = ctx.guild
         voice_client: discord.VoiceClient = discord.utils.get(bot.voice_clients, guild=guild)
-        audio_source = discord.FFmpegPCMAudio("sounds/"+lm+'.mp3')
+        audio_source = discord.FFmpegPCMAudio("/media/Sounds/"+lm+'.mp3')
         voice_client.play(audio_source, after=None)
 
 bot.run(TOKEN)
