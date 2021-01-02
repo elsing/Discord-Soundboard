@@ -28,7 +28,7 @@ async def on_message(ctx):
     channel2 = ctx.channel
     async for message in channel2.history(limit=1):
         lm=message.content
-    if "$bjv" in lm:
+    if "$b1jv" in lm:
         channel1 = ctx.author.voice.channel
         await channel1.connect()
         await channel2.send('Connected')
