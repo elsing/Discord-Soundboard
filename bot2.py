@@ -8,7 +8,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = os.getenv('DISCORD_TOKEN2')
 
 # Suppress noise about console usage from errors
 youtube_dl.utils.bug_reports_message = lambda: ''
@@ -63,7 +63,7 @@ class Music(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def join(self, ctx, *, channel: discord.VoiceChannel):
+    async def join2(self, ctx, *, channel: discord.VoiceChannel):
         """Joins a voice channel"""
 
         if ctx.voice_client is not None:
@@ -137,13 +137,6 @@ async def on_ready():
     print('Logged in as {0} ({0.id})'.format(bot.user))
     print('------')
 
-
-
-@bot.command()
-async def jc(ctx):
-    channel1 = ctx.author.voice.channel
-    await channel1.connect()
-
 @bot.event
 async def on_message(ctx):
     lm=""
@@ -151,17 +144,54 @@ async def on_message(ctx):
     channel2 = ctx.channel
     async for message in channel2.history(limit=1):
         lm=message.content
-    if "$b1jv" in lm:
+
+    if "$b2jv" in lm:
         await channel1.connect()
         await channel2.send('Connected')
+    channel = ctx.author.voice.channel
+    if "$b2dc" in lm:
+        await channel1.disconnect()
 
-    if "$comm" in lm:
-        await channel2.send(lm[6:])
+# #    print("test")
+# #    voice.play(discord.FFmpegPCMAudio(executable="C:/path/ffmpeg.exe", source="C:/songpath"))
+#     # oldestMessage = None
+#     # for channel in ctx.guild.text_channels:
+#     #     fetchMessage = await channel.history().find(lambda m: m.author.id == users_id)
+#     #     if fetchMessage is None:
+#     #         continue
 
-    if "$b1dc" in lm:
-        for vc in client.voice_clients:
-            await vc.disconnect()
 
+#     #     if oldestMessage is None:
+#     #         oldestMessage = fetchMessage
+#     #     else:
+#     #         if fetchMessage.created_at > oldestMessage.created_at:
+#     #             oldestMessage = fetchMessage
+
+#     # if (oldestMessage is not None):
+#     #     await ctx.send(f"Oldest message is {oldestMessage.content}")
+#     # else:
+#     #     await ctx.send("No message found.")
+#     guild = ctx.guild
+#     voice_client: discord.VoiceClient = discord.utils.get(bot.voice_clients, guild=guild)
+#     audio_source = discord.FFmpegPCMAudio('boom1.mp3')
+#     voice_client.play(audio_source, after=None)
+#     print(ctx.author.voice.channel)
+
+@bot.command(aliases=['paly', 'queue', 'que'])
+async def jc(ctx):
+    #guild = ctx.guild
+    #discord.VoiceClient = discord.utils.get(bot.voice_clients, guild=guild)
+    #audio_source = discord.FFmpegPCMAudio('vuvuzela.mp3')
+    #discord.VoiceClient.play(audio_source, after=None)
+    print()
+    channel = ctx.author.voice.channel
+    if ctx.voice_client is not None:
+        await channel.connect()
+    #ctx.voice_client.move_to(channel)
+
+#@bot.event
+#async def on_message(message):
+#    bot.process_commands(message)
 
 bot.add_cog(Music(bot))
 bot.run(TOKEN)
