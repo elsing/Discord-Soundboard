@@ -147,20 +147,21 @@ async def jc(ctx):
 @bot.event
 async def on_message(ctx):
     lm=""
-    channel1 = ctx.author.voice.channel
+    
     channel2 = ctx.channel
     async for message in channel2.history(limit=1):
         lm=message.content
-    if "$b1jv" in lm:
-        await channel1.connect()
+    if "$bjv" in lm:
+        channel1 = ctx.author.voice.channel
+        vc = await channel1.connect()
         await channel2.send('Connected')
 
     if "$comm" in lm:
         await channel2.send(lm[6:])
 
     if "$b1dc" in lm:
-        for vc in client.voice_clients:
-            await vc.disconnect()
+        server = ctx.message.guild.voice_client
+        await server.disconnect()
 
 
 bot.add_cog(Music(bot))

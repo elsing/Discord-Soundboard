@@ -140,17 +140,22 @@ async def on_ready():
 @bot.event
 async def on_message(ctx):
     lm=""
-    channel1 = ctx.author.voice.channel
     channel2 = ctx.channel
     async for message in channel2.history(limit=1):
         lm=message.content
 
-    if "$b2jv" in lm:
+    if "$bjv" in lm:
+        channel1 = ctx.author.voice.channel
         await channel1.connect()
         await channel2.send('Connected')
-    channel = ctx.author.voice.channel
     if "$b2dc" in lm:
         await channel1.disconnect()
+    if "$b2ps" in lm:
+        lm = lm[6:]
+        guild = ctx.guild
+        voice_client: discord.VoiceClient = discord.utils.get(bot.voice_clients, guild=guild)
+        audio_source = discord.FFmpegPCMAudio("sounds/"+lm+'.mp3')
+        voice_client.play(audio_source, after=None)
 
 # #    print("test")
 # #    voice.play(discord.FFmpegPCMAudio(executable="C:/path/ffmpeg.exe", source="C:/songpath"))
